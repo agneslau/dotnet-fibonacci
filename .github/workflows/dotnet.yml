@@ -35,14 +35,14 @@ jobs:
     #needs: tags
     uses: ./.github/workflows/Docker.yml
     with:
-      image_name: "guillaumechervetlunique/fibonacci"
+      image_name: "agneslaur/fibonacci"
       image_version: "0.0.1"
       image_build_args: ""
       image_context: .
       image_file: "./src/Leonardo.Web/Dockerfile"
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
   build:
     #needs: tags
     runs-on: ubuntu-latest
