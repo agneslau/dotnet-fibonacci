@@ -60,3 +60,16 @@ jobs:
         with:
           name: Publish win-x64 Fibonacci
           path: ./win-x64/fibonacci
+  publish_docker:
+    needs: [ tags, build_docker ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: azure login
+        uses: azure/login@v1
+        with: 
+          # az ad sp create-for-rbac --name "azure-admin" --role contributor --scopes /subscriptions/<subscription-id> --sdk-auth
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+      - name: Deploy container
+        run: |# https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
+          az group create --name mon-resource-group --location northeurope
+          az container create --resource-group mon-resource-group --name fibonacci-agnes --dns-name-label fibonacci-agnesLau --image docker.io/agneslaur/fibonacci:${{ needs.tags.outputs.new_version }} --ports 8080
