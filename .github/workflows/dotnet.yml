@@ -43,7 +43,7 @@ jobs:
       image_file: "./src/Leonardo.Web/Dockerfile"
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_TOKEN }}
   publish_docker:
     needs: [ tags, build_docker ]
     runs-on: ubuntu-latest
